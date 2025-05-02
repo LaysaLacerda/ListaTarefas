@@ -1,6 +1,7 @@
 import { Database } from './database.js'
 import { randomUUID } from 'node:crypto' 
 import { buildRoutePath } from '../utils/build-route-path.js'
+import { validarBody } from '../utils/validar.js'
 
 const database = new Database
 
@@ -23,6 +24,9 @@ export const routes = [
         method: 'POST',
         url: buildRoutePath('/tasks'),
         handler: (req, res) => {
+            if (!validarBody(req.body)) {
+                return res.writeHead(400).end()    
+            }
             const {title, description} = req.body
 
             const task = ({
@@ -53,6 +57,10 @@ export const routes = [
         method: 'PUT',
         url:  buildRoutePath('/tasks/:id'),         
         handler: (req, res) => {
+            if (!validarBody(req.body)) {
+                return res.writeHead(400).end()    
+            }
+            
             const { id }= req.params
             const { title, description } = req.body
             const updated_at = new Date()
