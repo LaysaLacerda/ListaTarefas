@@ -58,7 +58,7 @@ export const routes = [
         url:  buildRoutePath('/tasks/:id'),         
         handler: (req, res) => {
             if (!validarBody(req.body)) {
-                return res.writeHead(400).end()    
+                return res.writeHead(400).end('Dados incompletos')    
             }
             
             const { id }= req.params
